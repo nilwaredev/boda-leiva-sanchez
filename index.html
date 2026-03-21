@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boda Leiva Sánchez</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://raw.githubusercontent.com/farazc60/Project-Images/refs/heads/main/wedding_template/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+    <!-- AOS (Animate on Scroll) CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Swiper JS CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+    <!-- Lightbox2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+     <link rel="stylesheet" href="styles.css">
+</head>
+<body class="loading">
+    <!-- ============================================ -->
+    <!--                  PRELOADER                   -->
+    <!-- ============================================ -->
+    <div class="loader-wrapper" id="loader">
+        <div class="loader-split-left"></div>
+        <div class="loader-split-right"></div>
+        <div class="loader-content">
+            <svg class="drawing-heart" viewBox="0 0 100 100">
+                <path d="M50,30 C10,10 10,60 50,90 C90,60 90,10 50,30 Z"></path>
+            </svg>
+            <div class="loader-text">N & P</div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!--                  NAVBAR                      -->
+    <!-- ============================================ -->
+    <nav class="navbar navbar-expand-lg mainNav fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">N & P<span>•</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-expanded="false" onclick="toggleHamburger(this)">
+                <div class="hamburger-animated">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Inicio</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Nuestra boda
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#story">Nuestra historia</a></li>
+                            <li><a class="dropdown-item" href="#">Venue</a></li>
+                            <li><a class="dropdown-item" href="#">Itinerario</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#gallery">Galería</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#registry">Mesa de regalos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#rsvp">RSVP</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================ -->
+    <!--               HERO SECTION                   -->
+    <!-- ============================================ -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
+                <h1 class="hero-title">Nicole<br><span>&</span><br>Pedro</h1>
+                <span class="pre-title">¡Nos casamos!</span>
+                <p class="hero-text">08 . 08 . 2026</p>
+                
+                
+                <div class="music-player" id="heroMusicPlayer" aria-label="Reproductor de música">
+                    <button class="music-toggle" id="musicToggle" type="button" aria-label="Reproducir o pausar música">
+                        <i class="fas fa-play" id="musicToggleIcon"></i>
+                    </button>
+                    <div class="music-player-content">
+                        <p class="music-label">Nuestra canción</p>
+                        <h3 class="music-title">Nuestra canción</h3>
+                        <div class="music-progress" id="musicProgress" role="progressbar" aria-label="Progreso de la canción">
+                            <span class="music-progress-fill" id="musicProgressFill"></span>
+                        </div>
+                        <div class="music-time">
+                            <span id="musicCurrentTime">0:00</span>
+                            <span id="musicDuration">0:00</span>
+                        </div>
+                    </div>
+                    <audio id="heroAudio" preload="auto" autoplay loop>
+                        <source src="music/Turning Page - Sleeping At Last - Violin.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+            </div>
+        </div>
+        
+        <!-- <div class="mouse-scroll">
+            <div class="mouse">
+                <div class="mouse-wheel"></div>
+            </div>
+            <div class="scroll-text">DESLIZA HACIA ABAJO</div>
+        </div> -->
+    </section>
+
+    <!-- ============================================ -->
+    <!--              COUNTDOWN SECTION               -->
+    <!-- ============================================ -->
+    <section id="countdown" class="section-padding countdown-section">
+        <div class="overlay-bg"></div>
+        <div class="container text-center countdown-content">
+            <h2 class="section-title" data-aos="fade-up">Nuestro gran día comienza en...</h2>
+            <div class="countdown-container" data-aos="fade-up">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">00</div>
+                    <div class="countdown-label">Días</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">00</div>
+                    <div class="countdown-label">Horas</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">Minutos</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">00</div>
+                    <div class="countdown-label">Segundos</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ============================================ -->
+    <!--              OUR STORY SECTION               -->
+    <!-- ============================================ -->
+    <section id="story" class="section-padding">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <img src="images/DSC02050.jpg" alt="Our Story" class="img-fluid story-img">
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="ps-lg-5 mt-5 mt-lg-0">
+                        <h2 class="section-title">Nuestra Historia</h2>
+                        <p class="section-subtitle">Cómo comenzó todo...</p>
+                        <p>Hay historias que comienzan con una casualidad, y otras que parecen estar escritas desde mucho antes de que podamos entenderlas. La nuestra nació en la inocencia de la niñez, cuando nuestras vidas se cruzaron por primera vez sin imaginar todo lo que el destino tenía preparado. Con el paso de los años, entre recuerdos, risas y momentos compartidos, ese cariño fue creciendo en silencio hasta transformarse en algo más profundo, más fuerte… en un amor verdadero.</p>
+                        <p>Hoy, después de tantos caminos recorridos, decisiones, sueños y promesas, estamos aquí, eligiéndonos una vez más, pero ahora para siempre. Lo que comenzó como una historia sencilla se convirtió en nuestro lugar seguro, en un amor que nos impulsa a construir juntos un futuro lleno de ilusiones, complicidad y felicidad. Y este es solo el inicio del capítulo más importante de nuestras vidas.</p>
+                        <!-- <a href="#" class="btn btn-primary mt-3">Read More</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!--            MEET THE COUPLE SECTION           -->
+    <!-- ============================================ -->
+    <section id="couple" class="section-padding bg-light-pink">
+        <div class="container text-center">
+            <h2 class="section-title" data-aos="fade-up">Detalles</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Queremos que seas parte de nuestra historia</p>
+            <div class="row justify-content-center">
+                <!-- Religious Ceremony -->
+                <div class="col-lg-5 mb-5 mb-lg-0" data-aos="fade-right" data-aos-delay="200">
+                    <div class="couple-card text-center">
+                        <img src="images/church.png" alt="Groom" class="couple-img">
+                        <h3>Ceremonia Religiosa</h3>
+                        <h4>Parroquia Nuestra Señora del Pilar</h4>
+                        <p>Calle 15 de Septiembre, Zaragoza, El Salvador</p>
+                        <div class="social-icons">
+                            <a href="#"><i class="fa-solid fa-location-dot"></i></a>
+                            <a href="#"><i class="fa-brands fa-waze"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Reception -->
+                <div class="col-lg-5" data-aos="fade-left" data-aos-delay="200">
+                    <div class="couple-card text-center">
+                        <img src="images/reception.png" alt="Bride" class="couple-img">
+                        <h3>Recepción</h3>
+                        <h4>Quinta del Pilar</h4>
+                        <p>Av. Oscar A. Romero, #2, Zaragoza, El Salvador</p>
+                        <div class="social-icons">
+                            <a href="#"><i class="fa-solid fa-location-dot"></i></a>
+                            <a href="#"><i class="fa-brands fa-waze"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ============================================ -->
+    <!--            WEDDING PARTY SECTION             -->
+    <!-- ============================================ -->
+    <!-- <section id="party" class="section-padding">
+        <div class="container text-center">
+            <h2 class="section-title" data-aos="fade-up">Wedding Party</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">OUR NEAREST & DEAREST</p>
+            
+            
+            <div class="swiper wedding-party-slider" data-aos="fade-up" data-aos-delay="200">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="party-member">
+                            <img src="https://raw.githubusercontent.com/farazc60/Project-Images/refs/heads/main/wedding_template/emily-white-maid-of-honor.png" alt="Bridesmaid">
+                            <h4>Emily White</h4>
+                            <p>Maid of Honor</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="party-member">
+                            <img src="https://raw.githubusercontent.com/farazc60/Project-Images/refs/heads/main/wedding_template/michael-brown-best-man.png" alt="Groomsman">
+                            <h4>Michael Brown</h4>
+                            <p>Best Man</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="party-member">
+                            <img src="https://raw.githubusercontent.com/farazc60/Project-Images/refs/heads/main/wedding_template/sarah-green-bridesmaid.png" alt="Bridesmaid">
+                            <h4>Sarah Green</h4>
+                            <p>Bridesmaid</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="party-member">
+                            <img src="https://raw.githubusercontent.com/farazc60/Project-Images/refs/heads/main/wedding_template/david-black-groomsman.png" alt="Groomsman">
+                            <h4>David Black</h4>
+                            <p>Groomsman</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="party-member">
+                            <img src="https://raw.githubusercontent.com/farazc60/Project-Images/refs/heads/main/wedding_template/jessica-blue-bridesmaid.png" alt="Bridesmaid">
+                            <h4>Jessica Blue</h4>
+                            <p>Bridesmaid</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="party-member">
+                            <img src="https://raw.githubusercontent.com/farazc60/Project-Images/refs/heads/main/wedding_template/chris-yellow-groomsman.png" alt="Groomsman">
+                            <h4>Chris Yellow</h4>
+                            <p>Groomsman</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="swiper-pagination mt-4"></div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- ============================================ -->
+    <!--              EVENTS SECTION                  -->
+    <!-- ============================================ -->
+    <section id="events" class="section-padding bg-light-pink">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title" data-aos="fade-up">Itinerario</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">¡Celebra junto a nosotros!</p>
+            </div>
+            <ul class="timeline">
+                <li data-aos="fade-right">
+                    <div class="timeline-image"><i class="fas fa-church"></i></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4>Ceremonia Religiosa</h4>
+                            <p class="subheading">04:45 PM</p>
+                        </div>
+                        <div class="timeline-body">
+                            <p>Este día unimos nuestras vidas ante Dios, sellando con fe y amor la promesa de caminar juntos por siempre. Este será el momento donde nuestros corazones se convierten en uno solo.</p>
+                            <p><i class="fas fa-map-marker-alt me-2"></i>Parroquia Nuestra Señora del Pilar, Zaragoza, El Salvador</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="timeline-inverted" data-aos="fade-left">
+                    <div class="timeline-image"><i class="fas fa-cocktail"></i></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4>Pre Cóctel</h4>
+                            <p class="subheading">06:30 PM</p>
+                        </div>
+                        <div class="timeline-body">
+                            <p>Mientras comienza nuestra celebración, disfruta de este espacio pensado para compartir, conversar y brindar por los momentos que están por venir.</p>
+                             <p><i class="fas fa-map-marker-alt me-2"></i>Quinta del Pilar, Zaragoza, El Salvador</p>
+                        </div>
+                    </div>
+                </li>
+                <li data-aos="fade-right">
+                    <div class="timeline-image"><i class="fa-solid fa-ring"></i></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4>Entrada de los novios</h4>
+                            <p class="subheading">07:00 PM</p>
+                        </div>
+                        <div class="timeline-body">
+                            <p>Con el corazón lleno de emoción, hacemos nuestra primera entrada como esposos, listos para celebrar junto a ustedes este nuevo capítulo de nuestras vidas.</p>
+                            <p><i class="fas fa-map-marker-alt me-2"></i>Quinta del Pilar, Zaragoza, El Salvador</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="timeline-inverted" data-aos="fade-left">
+                    <div class="timeline-image"><i class="fa-solid fa-champagne-glasses"></i></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4>Brindis</h4>
+                            <p class="subheading">07:20 PM</p>
+                        </div>
+                        <div class="timeline-body">
+                            <p>Levantemos las copas por el amor, por los sueños cumplidos y por todos los momentos que aún nos quedan por vivir juntos.</p>
+                             <p><i class="fas fa-map-marker-alt me-2"></i>Quinta del Pilar, Zaragoza, El Salvador</p>
+                        </div>
+                    </div>
+                </li>
+                <li data-aos="fade-right">
+                    <div class="timeline-image"><i class="fas fa-utensils"></i></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4>Cena</h4>
+                            <p class="subheading">07:30 PM</p>
+                        </div>
+                        <div class="timeline-body">
+                            <p>Compartamos la mesa, los sabores y la alegría de este día tan especial, celebrando el amor que nos reúne esta noche..</p>
+                             <p><i class="fas fa-map-marker-alt me-2"></i>Quinta del Pilar, Zaragoza, El Salvador</p>
+                        </div>
+                    </div>
+                </li>
+                 <li class="timeline-inverted" data-aos="fade-left">
+                    <div class="timeline-image"><i class="fas fa-glass-cheers"></i></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4>Fiesta</h4>
+                            <p class="subheading">08:30 PM</p>
+                        </div>
+                        <div class="timeline-body">
+                            <p>Es momento de celebrar, reír, bailar y crear recuerdos inolvidables. ¡Que comience la fiesta y que esta noche nunca termine!</p>
+                             <p><i class="fas fa-map-marker-alt me-2"></i>Quinta del Pilar, Zaragoza, El Salvador</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!--              GALLERY SECTION                 -->
+    <!-- ============================================ -->
+    <section id="gallery" class="section-padding">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title" data-aos="fade-up">Galería de Fotos</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Momentos que atesoramos</p>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-6 gallery-item" data-aos="zoom-in">
+                    <a href="images/gallery/DSC02018.jpg" data-lightbox="gallery" data-title="The Proposal">
+                        <img src="images/gallery/DSC02018.jpg" class="img-fluid" alt="Gallery Image">
+                        <div class="overlay"><i class="fas fa-search-plus"></i></div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-6 gallery-item" data-aos="zoom-in" data-aos-delay="100">
+                    <a href="images/gallery/DSC02026.jpg" data-lightbox="gallery" data-title="Our First Trip">
+                        <img src="images/gallery/DSC02026.jpg" class="img-fluid" alt="Gallery Image">
+                        <div class="overlay"><i class="fas fa-search-plus"></i></div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-6 gallery-item" data-aos="zoom-in" data-aos-delay="200">
+                    <a href="images/gallery/DSC02056.jpg" data-lightbox="gallery" data-title="Coffee Shop Memories">
+                        <img src="images/gallery/DSC02056.jpg" class="img-fluid" alt="Gallery Image">
+                        <div class="overlay"><i class="fas fa-search-plus"></i></div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-6 gallery-item" data-aos="zoom-in" data-aos-delay="300">
+                    <a href="images/gallery/DSC02061.jpg" data-lightbox="gallery" data-title="Hiking Adventures">
+                        <img src="images/gallery/DSC02061.jpg" class="img-fluid" alt="Gallery Image">
+                        <div class="overlay"><i class="fas fa-search-plus"></i></div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-6 gallery-item" data-aos="zoom-in" data-aos-delay="400">
+                    <a href="images/gallery/DSC02085.jpg" data-lightbox="gallery" data-title="Engagement Photoshoot">
+                        <img src="images/gallery/DSC02085.jpg" class="img-fluid" alt="Gallery Image">
+                        <div class="overlay"><i class="fas fa-search-plus"></i></div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-6 gallery-item" data-aos="zoom-in" data-aos-delay="500">
+                    <a href="images/gallery/DSC02102.jpg" data-lightbox="gallery" data-title="Just Because">
+                        <img src="images/gallery/DSC02102.jpg" class="img-fluid" alt="Gallery Image">
+                        <div class="overlay"><i class="fas fa-search-plus"></i></div>
+                    </a>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="#" class="btn btn-primary">Compártenos tus fotos</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!--                 RSVP SECTION                 -->
+    <!-- ============================================ -->
+    <section id="rsvp" class="section-padding rsvp-section">
+        <div class="overlay-bg"></div>
+        <div class="container text-center rsvp-content">
+            <h2 class="section-title" data-aos="fade-up">Confirmar Asistencia</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Agradecemos que confirmes tu asistencia antes del 31 de mayo</p>
+            <p class="lead mb-4" data-aos="fade-up" data-aos-delay="200">Nos haría muchísima ilusión contar contigo en este día tan especial. Para nosotros es muy importante conocer tu asistencia, esto nos ayudará a organizar mejor cada momento y hacer de esta celebración una experiencia inolvidable para todos.</p>
+            <a href="#" class="btn btn-primary btn-lg" data-aos="fade-up" data-aos-delay="300">Enviar Respuesta</a>
+        </div>
+    </section>
+    
+    <!-- ============================================ -->
+    <!--            GIFT REGISTRY SECTION             -->
+    <!-- ============================================ -->
+    <section id="registry" class="section-padding">
+        <div class="container text-center">
+            <h2 class="section-title" data-aos="fade-up">Sugerencia de Regalos</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">TU PRESENCIA ES NUESTRO REGALO</p>
+            <p class="mb-5" data-aos="fade-up" data-aos-delay="200">Tu cariño y apoyo son los mejores regalos que podríamos pedir. Pero si deseas tener un detalle con nosotros, les dejamos estas opciones:</p>
+            <div class="row justify-content-center align-items-center g-4">
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="300">
+                    <a href="#"><img src="https://raw.githubusercontent.com/farazc60/Project-Images/refs/heads/main/wedding_template/elegant-home-essentials.png" alt="Registry 1" class="img-fluid gift-logo"></a>
+                </div>
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="400">
+                    <a href="#"><img src="https://raw.githubusercontent.com/farazc60/Project-Images/refs/heads/main/wedding_template/bedroom-and-bath.png" alt="Registry 2" class="img-fluid gift-logo"></a>
+                </div>
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="500">
+                    <a href="#"><img src="https://raw.githubusercontent.com/farazc60/Project-Images/refs/heads/main/wedding_template/kitchen-and-appliances.png" alt="Registry 3" class="img-fluid gift-logo"></a>
+                </div>
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="600">
+                    <a href="#"><img src="https://raw.githubusercontent.com/farazc60/Project-Images/refs/heads/main/wedding_template/living-room-and-decor.png" alt="Registry 4" class="img-fluid gift-logo"></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!--                 BLOG SECTION                 -->
+    <!-- ============================================ -->
+    <section id="blog" class="section-padding bg-light-pink">
+        <div class="container">
+            <div class="text-center">
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">ESPERAMOS CONTAR CON SU PRESENCIA</p>
+                <h2 class="section-title" data-aos="fade-up">¡Muchas Gracias!</h2>
+            </div>
+            <!-- <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card blog-card h-100">
+                        <img src="https://raw.githubusercontent.com/farazc60/Project-Images/refs/heads/main/wedding_template/choosing-the-perfect-venue.png" class="card-img-top" alt="Blog Post 1">
+                        <div class="card-body">
+                            <p class="card-meta">August 01, 2025 | Planning</p>
+                            <h5 class="card-title"><a href="#">Choosing The Perfect Venue</a></h5>
+                            <p class="card-text">The journey to finding the place where we'll say "I do". It was a mix of spreadsheets, site visits, and that one magical moment...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card blog-card h-100">
+                        <img src="https://raw.githubusercontent.com/farazc60/Project-Images/refs/heads/main/wedding_template/the-story-of-the-ring.png" class="card-img-top" alt="Blog Post 2">
+                        <div class="card-body">
+                            <p class="card-meta">July 15, 2025 | Story</p>
+                            <h5 class="card-title"><a href="#">The Story of The Ring</a></h5>
+                            <p class="card-text">Every detail has a story, especially this one. A look into the design and meaning behind the engagement ring.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card blog-card h-100">
+                        <img src="https://raw.githubusercontent.com/farazc60/Project-Images/refs/heads/main/wedding_template/our-wedding-moodboard.png" class="card-img-top" alt="Blog Post 3">
+                        <div class="card-body">
+                            <p class="card-meta">June 28, 2025 | Inspiration</p>
+                            <h5 class="card-title"><a href="#">Our Wedding Moodboard</a></h5>
+                            <p class="card-text">A sneak peek into the colors, textures, and overall vibe we're dreaming of for our special day. Get inspired with us!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="text-center mt-4">
+                <a href="#" class="btn btn-primary">Read More Stories</a>
+            </div> -->
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!--                   FOOTER                     -->
+    <!-- ============================================ -->
+    <footer class="footer-main">
+        <div class="container">
+            <div class="row gy-5">
+                <!-- About Section -->
+                <div class="col-lg-4 col-md-12">
+                    <p class="mt-2">Gracias por ser parte de nuestra historia y por acompañarnos en uno de los días más importantes de nuestras vidas. Su presencia es el mejor regalo que podríamos recibir, y compartir este momento con ustedes lo hace aún más significativo.</p>
+                    <p class="mt-2">Con mucho amor,</p>
+                    <a href="#" class="footer-brand">Nicole & Pedro</a>
+                    <div class="social-icons-footer mt-4">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links Section -->
+                <!-- <div class="col-lg-2 col-md-4 col-6">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Events</a></li>
+                        <li><a href="#">Gallery</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">RSVP</a></li>
+                    </ul>
+                </div> -->
+                
+                <!-- The Wedding Section -->
+                <!-- <div class="col-lg-3 col-md-4 col-6">
+                    <h5>The Wedding</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="#">Venue</a></li>
+                        <li><a href="#">Schedule</a></li>
+                        <li><a href="#">Gallery</a></li>
+                        <li><a href="#">Registry</a></li>
+                    </ul>
+                </div> -->
+                
+                <!-- Contact Info Section -->
+                <!-- <div class="col-lg-3 col-md-4">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled contact-info">
+                        <li class="d-flex mb-3">
+                            <i class="fas fa-map-marker-alt mt-1"></i>
+                            <span>123 Wedding Lane,<br>Celebration City, NY 12345</span>
+                        </li>
+                        <li class="d-flex mb-3">
+                            <i class="fas fa-envelope mt-1"></i>
+                            <a href="mailto:hello@jamesandjane.com" class="text-white text-decoration-none">hello@jamesandjane.com</a>
+                        </li>
+                        <li class="d-flex">
+                            <i class="fas fa-phone mt-1"></i>
+                            <a href="tel:+1234567890" class="text-white text-decoration-none">+1 234 567 890</a>
+                        </li>
+                    </ul>
+                </div> -->
+            </div>
+        </div>
+        
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="container text-center">
+                <p class="mb-0">Copyright © 2026 <a href="https://www.codewithfaraz.com" target="_blank">Nilware</a>. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================ -->
+    <!--              JAVASCRIPT FILES                -->
+    <!-- ============================================ -->
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Lightbox2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+    
+    <!-- Custom JS -->
+     <script src="script.js"></script>
+</body>
+</html>
