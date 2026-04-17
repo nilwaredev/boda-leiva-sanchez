@@ -47,47 +47,7 @@
         </div>
     </div>
 
-    <!-- ============================================ -->
-    <!--                  NAVBAR                      -->
-    <!-- ============================================ -->
-    <nav class="navbar navbar-expand-lg mainNav fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">N & P<span>•</span></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-expanded="false" onclick="toggleHamburger(this)">
-                <div class="hamburger-animated">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Inicio</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Nuestra boda
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#story">Nuestra historia</a></li>
-                            <li><a class="dropdown-item" href="#">Venue</a></li>
-                            <li><a class="dropdown-item" href="#">Itinerario</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#gallery">Galería</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#registry">Mesa de regalos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#rsvp">RSVP</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div class="invitation-shell">
 
     <!-- ============================================ -->
     <!--               HERO SECTION                   -->
@@ -95,48 +55,37 @@
     <section class="hero-section">
         <div class="container">
             <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
-                <h1 class="hero-title">Nicole<br><span>&</span><br>Pedro</h1>
-                <span class="pre-title">¡Nos casamos!</span>
+                <h1 class="hero-title">Nicole<br>&<br>Pedro</h1>
+                <span class="pre-title">¡Nuestra boda!</span>
                 <p class="hero-text">08 . 08 . 2026</p>
                 
                 
-                <div class="music-player" id="heroMusicPlayer" aria-label="Reproductor de música">
-                    <button class="music-toggle" id="musicToggle" type="button" aria-label="Reproducir o pausar música">
-                        <i class="fas fa-play" id="musicToggleIcon"></i>
-                    </button>
-                    <div class="music-player-content">
-                        <p class="music-label">Nuestra canción</p>
-                        <h3 class="music-title">Nuestra canción</h3>
-                        <div class="music-progress" id="musicProgress" role="progressbar" aria-label="Progreso de la canción">
-                            <span class="music-progress-fill" id="musicProgressFill"></span>
-                        </div>
-                        <div class="music-time">
-                            <span id="musicCurrentTime">0:00</span>
-                            <span id="musicDuration">0:00</span>
-                        </div>
-                    </div>
-                    <audio id="heroAudio" preload="auto" autoplay loop>
-                        <source src="music/Turning Page - Sleeping At Last - Violin.mp3" type="audio/mpeg">
-                    </audio>
-                </div>
             </div>
         </div>
         
-        <!-- <div class="mouse-scroll">
+        <div class="mouse-scroll">
             <div class="mouse">
                 <div class="mouse-wheel"></div>
             </div>
             <div class="scroll-text">DESLIZA HACIA ABAJO</div>
-        </div> -->
+        </div>
     </section>
 
     <!-- ============================================ -->
     <!--              COUNTDOWN SECTION               -->
     <!-- ============================================ -->
-    <section id="countdown" class="section-padding countdown-section">
+    <!-- <section class="countdown-image-section" aria-hidden="true">
         <div class="overlay-bg"></div>
+    </section> -->
+
+    <section id="countdown" class="countdown-section">
         <div class="container text-center countdown-content">
-            <h2 class="section-title" data-aos="fade-up">Nuestro gran día comienza en...</h2>
+            <div class="wedding-date-strip" data-aos="fade-up" aria-label="Sábado 08 2026">
+                <span class="date-side">Sábado</span>
+                <span class="date-day">08</span>
+                <span class="date-side">Agosto</span>
+            </div>
+            <h2 class="countdown-subtitle mt-5" data-aos="fade-up">Solo faltan</h2>
             <div class="countdown-container" data-aos="fade-up">
                 <div class="countdown-item">
                     <div class="countdown-number" id="days">00</div>
@@ -162,19 +111,20 @@
     <!-- ============================================ -->
     <!--              OUR STORY SECTION               -->
     <!-- ============================================ -->
-    <section id="story" class="section-padding">
+    <section id="story" class="pt-4">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-6" data-aos="fade-right">
-                    <img src="images/DSC02050.jpg" alt="Our Story" class="img-fluid story-img">
+                <div class="col-lg-12" data-aos="fade-right">
+                    <img src="images/photo-frame.png" alt="Our Story" class="img-fluid story-img">
                 </div>
-                <div class="col-lg-6" data-aos="fade-left">
-                    <div class="ps-lg-5 mt-5 mt-lg-0">
-                        <h2 class="section-title">Nuestra Historia</h2>
+                <div class="col-lg-12" data-aos="fade-left">
+                    <div class="mt-3 mt-lg-0 text-center">
+                        <!-- <h2 class="section-title">Nuestra Historia</h2>
                         <p class="section-subtitle">Cómo comenzó todo...</p>
                         <p>Hay historias que comienzan con una casualidad, y otras que parecen estar escritas desde mucho antes de que podamos entenderlas. La nuestra nació en la inocencia de la niñez, cuando nuestras vidas se cruzaron por primera vez sin imaginar todo lo que el destino tenía preparado. Con el paso de los años, entre recuerdos, risas y momentos compartidos, ese cariño fue creciendo en silencio hasta transformarse en algo más profundo, más fuerte… en un amor verdadero.</p>
                         <p>Hoy, después de tantos caminos recorridos, decisiones, sueños y promesas, estamos aquí, eligiéndonos una vez más, pero ahora para siempre. Lo que comenzó como una historia sencilla se convirtió en nuestro lugar seguro, en un amor que nos impulsa a construir juntos un futuro lleno de ilusiones, complicidad y felicidad. Y este es solo el inicio del capítulo más importante de nuestras vidas.</p>
                         <!-- <a href="#" class="btn btn-primary mt-3">Read More</a> -->
+                         <p class="mt-3">Nuestra historia continúa... por ello, con el amor que nos une, la bendición de Dios y el apoyo de nuestros padres, uniremos nuestras vidas y queremos que seas parte de este nuevo capítulo.</p>
                     </div>
                 </div>
             </div>
@@ -186,19 +136,22 @@
     <!-- ============================================ -->
     <section id="couple" class="section-padding bg-light-pink">
         <div class="container text-center">
-            <h2 class="section-title" data-aos="fade-up">Detalles</h2>
-            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Queremos que seas parte de nuestra historia</p>
+            <!-- <h2 class="section-title" data-aos="fade-up">Detalles</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Queremos que seas parte de nuestra historia</p> -->
             <div class="row justify-content-center">
                 <!-- Religious Ceremony -->
                 <div class="col-lg-5 mb-5 mb-lg-0" data-aos="fade-right" data-aos-delay="200">
                     <div class="couple-card text-center">
                         <img src="images/church.png" alt="Groom" class="couple-img">
-                        <h3>Ceremonia Religiosa</h3>
+                        <h3>Ceremonia</h3>
                         <h4>Parroquia Nuestra Señora del Pilar</h4>
                         <p>Calle 15 de Septiembre, Zaragoza, El Salvador</p>
-                        <div class="social-icons">
+                        <!-- <div class="social-icons">
                             <a href="#"><i class="fa-solid fa-location-dot"></i></a>
                             <a href="#"><i class="fa-brands fa-waze"></i></a>
+                        </div> -->
+                        <div class="btn-group">
+                            <a href="https://maps.app.goo.gl/umdZCt9dmkvKaThC8" class="btn hero-btn"><i class="fa-solid fa-location-dot me-2"></i> Ver ubicación</a>
                         </div>
                     </div>
                 </div>
@@ -209,9 +162,12 @@
                         <h3>Recepción</h3>
                         <h4>Quinta del Pilar</h4>
                         <p>Av. Oscar A. Romero, #2, Zaragoza, El Salvador</p>
-                        <div class="social-icons">
+                        <!-- <div class="social-icons">
                             <a href="#"><i class="fa-solid fa-location-dot"></i></a>
                             <a href="#"><i class="fa-brands fa-waze"></i></a>
+                        </div> -->
+                        <div class="btn-group">
+                            <a href="https://maps.app.goo.gl/k9XZxHVZD9qhqWeCA" class="btn hero-btn"><i class="fa-solid fa-location-dot me-2"></i> Ver ubicación</a>
                         </div>
                     </div>
                 </div>
@@ -282,12 +238,12 @@
     <!-- ============================================ -->
     <!--              EVENTS SECTION                  -->
     <!-- ============================================ -->
-    <section id="events" class="section-padding bg-light-pink">
+    <section id="events" class="section-padding">
         <div class="container">
-            <div class="text-center">
+            <!-- <div class="text-center">
                 <h2 class="section-title" data-aos="fade-up">Itinerario</h2>
                 <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">¡Celebra junto a nosotros!</p>
-            </div>
+            </div> -->
             <ul class="timeline">
                 <li data-aos="fade-right">
                     <div class="timeline-image"><i class="fas fa-church"></i></div>
@@ -296,10 +252,10 @@
                             <h4>Ceremonia Religiosa</h4>
                             <p class="subheading">04:45 PM</p>
                         </div>
-                        <div class="timeline-body">
+                        <!-- <div class="timeline-body">
                             <p>Este día unimos nuestras vidas ante Dios, sellando con fe y amor la promesa de caminar juntos por siempre. Este será el momento donde nuestros corazones se convierten en uno solo.</p>
                             <p><i class="fas fa-map-marker-alt me-2"></i>Parroquia Nuestra Señora del Pilar, Zaragoza, El Salvador</p>
-                        </div>
+                        </div> -->
                     </div>
                 </li>
                 <li class="timeline-inverted" data-aos="fade-left">
@@ -309,10 +265,10 @@
                             <h4>Pre Cóctel</h4>
                             <p class="subheading">06:30 PM</p>
                         </div>
-                        <div class="timeline-body">
+                        <!-- <div class="timeline-body">
                             <p>Mientras comienza nuestra celebración, disfruta de este espacio pensado para compartir, conversar y brindar por los momentos que están por venir.</p>
-                             <p><i class="fas fa-map-marker-alt me-2"></i>Quinta del Pilar, Zaragoza, El Salvador</p>
-                        </div>
+                            <p><i class="fas fa-map-marker-alt me-2"></i>Quinta del Pilar, Zaragoza, El Salvador</p>
+                        </div> -->
                     </div>
                 </li>
                 <li data-aos="fade-right">
@@ -322,10 +278,10 @@
                             <h4>Entrada de los novios</h4>
                             <p class="subheading">07:00 PM</p>
                         </div>
-                        <div class="timeline-body">
+                        <!-- <div class="timeline-body">
                             <p>Con el corazón lleno de emoción, hacemos nuestra primera entrada como esposos, listos para celebrar junto a ustedes este nuevo capítulo de nuestras vidas.</p>
                             <p><i class="fas fa-map-marker-alt me-2"></i>Quinta del Pilar, Zaragoza, El Salvador</p>
-                        </div>
+                        </div> -->
                     </div>
                 </li>
                 <li class="timeline-inverted" data-aos="fade-left">
@@ -335,10 +291,10 @@
                             <h4>Brindis</h4>
                             <p class="subheading">07:20 PM</p>
                         </div>
-                        <div class="timeline-body">
+                        <!-- <div class="timeline-body">
                             <p>Levantemos las copas por el amor, por los sueños cumplidos y por todos los momentos que aún nos quedan por vivir juntos.</p>
                              <p><i class="fas fa-map-marker-alt me-2"></i>Quinta del Pilar, Zaragoza, El Salvador</p>
-                        </div>
+                        </div> -->
                     </div>
                 </li>
                 <li data-aos="fade-right">
@@ -348,10 +304,10 @@
                             <h4>Cena</h4>
                             <p class="subheading">07:30 PM</p>
                         </div>
-                        <div class="timeline-body">
+                        <!-- <div class="timeline-body">
                             <p>Compartamos la mesa, los sabores y la alegría de este día tan especial, celebrando el amor que nos reúne esta noche..</p>
-                             <p><i class="fas fa-map-marker-alt me-2"></i>Quinta del Pilar, Zaragoza, El Salvador</p>
-                        </div>
+                            <p><i class="fas fa-map-marker-alt me-2"></i>Quinta del Pilar, Zaragoza, El Salvador</p>
+                        </div> -->
                     </div>
                 </li>
                  <li class="timeline-inverted" data-aos="fade-left">
@@ -361,10 +317,10 @@
                             <h4>Fiesta</h4>
                             <p class="subheading">08:30 PM</p>
                         </div>
-                        <div class="timeline-body">
+                        <!-- <div class="timeline-body">
                             <p>Es momento de celebrar, reír, bailar y crear recuerdos inolvidables. ¡Que comience la fiesta y que esta noche nunca termine!</p>
-                             <p><i class="fas fa-map-marker-alt me-2"></i>Quinta del Pilar, Zaragoza, El Salvador</p>
-                        </div>
+                            <p><i class="fas fa-map-marker-alt me-2"></i>Quinta del Pilar, Zaragoza, El Salvador</p>
+                        </div> -->
                     </div>
                 </li>
             </ul>
@@ -374,7 +330,7 @@
     <!-- ============================================ -->
     <!--              GALLERY SECTION                 -->
     <!-- ============================================ -->
-    <section id="gallery" class="section-padding">
+    <section id="gallery" class="section-padding bg-light-pink">
         <div class="container">
             <div class="text-center">
                 <h2 class="section-title" data-aos="fade-up">Galería de Fotos</h2>
@@ -579,6 +535,30 @@
             </div>
         </div>
     </footer>
+
+    </div>
+
+    <div class="floating-music-player" id="heroMusicPlayer" aria-label="Reproductor de música">
+        <div class="music-panel" id="musicPanel" aria-hidden="true">
+            <div class="music-player-content">
+                <p class="music-label">Escucha nuestra canción</p>
+                <h3 class="music-title">Escucha nuestra canción</h3>
+                <div class="music-progress" id="musicProgress" role="progressbar" aria-label="Progreso de la canción">
+                    <span class="music-progress-fill" id="musicProgressFill"></span>
+                </div>
+                <div class="music-time">
+                    <span id="musicCurrentTime">0:00</span>
+                    <span id="musicDuration">0:00</span>
+                </div>
+            </div>
+        </div>
+        <button class="music-toggle" id="musicToggle" type="button" aria-label="Reproducir o pausar música">
+            <i class="fas fa-music" id="musicToggleIcon"></i>
+        </button>
+        <audio id="heroAudio" preload="auto" autoplay loop>
+            <source src="music/Turning Page - Sleeping At Last - Violin.mp3" type="audio/mpeg">
+        </audio>
+    </div>
 
     <!-- ============================================ -->
     <!--              JAVASCRIPT FILES                -->

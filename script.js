@@ -103,7 +103,35 @@ $(document).ready(function () {
       });
   }
 
-  // 7. Hero Music Player
+  // 7. Decorative flowers reveal on scroll
+  const decoSections = document.querySelectorAll('#countdown, #couple, #gallery, #registry');
+  if (decoSections.length > 0) {
+      if ('IntersectionObserver' in window) {
+          const decoObserver = new IntersectionObserver(function (entries, observer) {
+              entries.forEach(function (entry) {
+                  if (entry.isIntersecting) {
+                      entry.target.classList.add('deco-visible');
+                      observer.unobserve(entry.target);
+                  }
+              });
+          }, {
+              threshold: 0.18,
+              rootMargin: '0px 0px -8% 0px'
+          });
+
+          decoSections.forEach(function (section) {
+              decoObserver.observe(section);
+          });
+      } else {
+          decoSections.forEach(function (section) {
+              section.classList.add('deco-visible');
+          });
+      }
+  }
+
+    // 8. Floating Music Player
+  const player = document.getElementById('heroMusicPlayer');
+  const panel = document.getElementById('musicPanel');
   const audio = document.getElementById('heroAudio');
   const toggleButton = document.getElementById('musicToggle');
   const toggleIcon = document.getElementById('musicToggleIcon');
@@ -111,6 +139,7 @@ $(document).ready(function () {
   const progressFill = document.getElementById('musicProgressFill');
   const currentTimeEl = document.getElementById('musicCurrentTime');
   const durationEl = document.getElementById('musicDuration');
+    let noteBurstInterval = null;
 
   function formatTime(seconds) {
       if (!Number.isFinite(seconds) || seconds < 0) {
@@ -122,8 +151,64 @@ $(document).ready(function () {
   }
 
   function setPlayerVisualState(isPlaying) {
-      if (!toggleIcon) return;
-      toggleIcon.className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
+      if (toggleIcon) {
+          toggleIcon.className = 'fas fa-music';
+      }
+
+      if (!toggleButton) return;
+      toggleButton.classList.toggle('is-playing', isPlaying);
+
+      if (isPlaying) {
+          startNoteBurst();
+      } else {
+          stopNoteBurst();
+      }
+  }
+
+  function emitFloatingNote() {
+      if (!toggleButton || !audio || audio.paused) return;
+
+      const note = document.createElement('span');
+      const drift = (Math.random() * 44) - 22;
+      const sizeJitter = 0.58 + (Math.random() * 0.34);
+      note.className = 'music-note-particle';
+      note.style.setProperty('--note-drift', `${drift.toFixed(0)}px`);
+      note.style.fontSize = `${sizeJitter.toFixed(2)}rem`;
+      note.innerHTML = '<i class="fas fa-music" aria-hidden="true"></i>';
+
+      toggleButton.appendChild(note);
+      window.setTimeout(function () {
+          note.remove();
+      }, 1150);
+  }
+
+  function startNoteBurst() {
+      if (noteBurstInterval || !toggleButton) return;
+      emitFloatingNote();
+      noteBurstInterval = window.setInterval(emitFloatingNote, 320);
+  }
+
+  function stopNoteBurst() {
+      if (noteBurstInterval) {
+          window.clearInterval(noteBurstInterval);
+          noteBurstInterval = null;
+      }
+  }
+
+  function expandPlayer() {
+      if (!player) return;
+      player.classList.add('is-expanded');
+      if (panel) {
+          panel.setAttribute('aria-hidden', 'false');
+      }
+  }
+
+  function collapsePlayer() {
+      if (!player) return;
+      player.classList.remove('is-expanded');
+      if (panel) {
+          panel.setAttribute('aria-hidden', 'true');
+      }
   }
 
   function updateProgress() {
@@ -146,6 +231,9 @@ $(document).ready(function () {
   }
 
   if (audio) {
+      let suppressHoverUntilMouseLeave = false;
+      const supportsHover = window.matchMedia('(hover: hover)').matches;
+
       audio.addEventListener('loadedmetadata', function () {
           if (durationEl) durationEl.textContent = formatTime(audio.duration);
       });
@@ -163,18 +251,36 @@ $(document).ready(function () {
           setPlayerVisualState(false);
       });
 
+      audio.addEventListener('ended', function () {
+          setPlayerVisualState(false);
+      });
+
       if (toggleButton) {
-          toggleButton.addEventListener('click', function () {
+          toggleButton.addEventListener('click', function (event) {
+              event.stopPropagation();
+
+              const isExpanded = player ? player.classList.contains('is-expanded') : false;
+              if (!supportsHover && !isExpanded) {
+                  expandPlayer();
+                  return;
+              }
+
               if (audio.paused) {
                   audio.play().catch(() => {});
               } else {
                   audio.pause();
               }
+
+              if (supportsHover) {
+                  suppressHoverUntilMouseLeave = true;
+              }
+              collapsePlayer();
           });
       }
 
       if (progressContainer) {
           progressContainer.addEventListener('click', function (event) {
+              event.stopPropagation();
               const rect = progressContainer.getBoundingClientRect();
               const clickX = event.clientX - rect.left;
               const ratio = Math.min(Math.max(clickX / rect.width, 0), 1);
@@ -183,6 +289,35 @@ $(document).ready(function () {
               }
           });
       }
+
+      if (player) {
+          player.addEventListener('click', function (event) {
+              event.stopPropagation();
+          });
+
+          if (supportsHover) {
+              player.addEventListener('mouseenter', function () {
+                  if (!suppressHoverUntilMouseLeave) {
+                      expandPlayer();
+                  }
+              });
+
+              player.addEventListener('mouseleave', function () {
+                  suppressHoverUntilMouseLeave = false;
+                  collapsePlayer();
+              });
+          }
+      }
+
+      document.addEventListener('click', function () {
+          collapsePlayer();
+      });
+
+      document.addEventListener('touchstart', function (event) {
+          if (player && !player.contains(event.target)) {
+              collapsePlayer();
+          }
+      }, { passive: true });
 
       setTimeout(attemptAutoplay, 2600);
 
