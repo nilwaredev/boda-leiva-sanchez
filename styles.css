@@ -918,7 +918,7 @@ a:hover {
 }
 
 .bg-light-pink {
-  background-color: #fff6f6;
+  background-color: rgb(232, 223, 215);
 }
 
 /* --- Our Story Section --- */
@@ -955,6 +955,126 @@ a:hover {
   color: var(--primary-color);
   font-style: italic;
   font-size: 2rem;
+}
+
+/* --- Dress Code Section --- */
+#dress-code .dress-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: left;
+}
+
+#dress-code .dress-text {
+  flex: 0 1 230px;
+}
+
+#dress-code .dress-text h4 {
+  margin-bottom: 8px;
+}
+
+#dress-code .dress-text p {
+  margin-bottom: 0;
+}
+
+#dress-code .dress-card .couple-img {
+  width: 180px;
+  height: 230px;
+  /* border-radius: 50%; */
+  object-fit: contain;
+  object-position: center;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+#dress-code .dress-card-ladies {
+  flex-direction: row;
+}
+
+#dress-code .dress-card-gents {
+  flex-direction: row;
+}
+
+#dress-code .dress-palette-wrapper {
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+#dress-code .dress-colors-subtitle {
+  margin-top: 0.45rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.95rem;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--secondary-color);
+}
+
+#dress-code .dress-palette {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 1.2rem;
+}
+
+#dress-code .dress-color-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid rgba(74, 74, 74, 0.18);
+}
+
+#dress-code .dot-burgundy {
+  background-color: #6b1f2f;
+}
+
+#dress-code .dot-champagne {
+  background-color: #d7bf9f;
+}
+
+#dress-code .dot-sage {
+  background-color: #9ba68a;
+}
+
+#dress-code .dot-navy {
+  background-color: #344a66;
+}
+
+#dress-code .dress-inspire-btn {
+  padding: 0.8rem 2.2rem;
+}
+
+@media (max-width: 991.98px) {
+  #dress-code .dress-card,
+  #dress-code .dress-card-gents,
+  #dress-code .dress-card-ladies {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: left;
+    padding: 20px 16px;
+  }
+
+  #dress-code .dress-text {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  #dress-code .dress-card .couple-img {
+    width: 120px;
+    height: 155px;
+    /* border-radius: 50%; */
+    object-fit: contain;
+    margin-bottom: 0;
+  }
+
+  #dress-code .dress-palette-wrapper {
+    margin-top: 0.5rem;
+  }
 }
 
 .social-icons a {
@@ -1125,12 +1245,55 @@ a:hover {
 }
 
 /* --- Gallery Section --- */
+.gallery-collage {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: minmax(130px, 1fr) minmax(170px, 1fr);
+  grid-template-areas:
+    "top-left top-right"
+    "bottom-left bottom-right";
+  gap: 8px;
+  max-width: 540px;
+  margin: 0 auto;
+  min-height: clamp(300px, 62vw, 420px);
+}
+
 .gallery-item {
   position: relative;
   overflow: hidden;
   border-radius: var(--border-radius);
   margin-bottom: 30px;
   display: block;
+  height: 100%;
+}
+
+.gallery-collage .gallery-item {
+  margin-bottom: 0;
+}
+
+.gallery-top-left {
+  grid-area: top-left;
+}
+
+.gallery-top-right {
+  grid-area: top-right;
+}
+
+.gallery-bottom-left {
+  grid-area: bottom-left;
+}
+
+.gallery-bottom-right {
+  grid-area: bottom-right;
+}
+
+.gallery-collage .gallery-item a {
+  display: block;
+  height: 100%;
+}
+
+.gallery-muted {
+  filter: grayscale(88%);
 }
 
 .gallery-item img {
@@ -1188,6 +1351,24 @@ a:hover {
   margin: 0;
 }
 
+@media (max-width: 767.98px) {
+  .gallery-collage {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, minmax(200px, 1fr));
+    grid-template-areas:
+      "top-left"
+      "top-right"
+      "bottom-left"
+      "bottom-right";
+    min-height: 0;
+    max-width: 100%;
+  }
+
+  .gallery-collage .gallery-item {
+    min-height: 200px;
+  }
+}
+
 /* --- RSVP Section --- */
 .rsvp-section {
   background: url('https://raw.githubusercontent.com/farazc60/Project-Images/refs/heads/main/wedding_template/rsvp-section.png') no-repeat center center fixed;
@@ -1207,19 +1388,212 @@ a:hover {
 .rsvp-content {
   position: relative;
   z-index: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.rsvp-letter-card {
+  width: min(100%, 560px);
+  background: rgba(253, 250, 246, 0.96);
+  border-radius: 12px;
+  box-shadow: 0 14px 35px rgba(44, 44, 44, 0.12);
+  padding: 2rem 1.4rem 1.6rem;
+  text-align: center;
+}
+
+.rsvp-reserved-label {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--secondary-color);
+}
+
+.rsvp-reserved-name {
+  margin: 0.4rem 0 0.1rem;
+  color: var(--secondary-color);
+  font-size: 2.2rem;
+  font-weight: 500;
+}
+
+.rsvp-reserved-count {
+  margin-bottom: 1.4rem;
+  color: var(--secondary-color);
+  font-size: 1.4rem;
+}
+
+.rsvp-form-title {
+  font-family: var(--heading-font);
+  font-size: 2.6rem;
+  color: var(--secondary-color);
+  margin-bottom: 1.1rem;
+}
+
+.rsvp-form {
+  text-align: left;
+}
+
+.rsvp-field-wrap {
+  margin-bottom: 0.7rem;
+}
+
+.rsvp-input {
+  width: 100%;
+  border: 1px solid rgba(74, 74, 74, 0.08);
+  background: rgba(238, 232, 228, 0.72);
+  border-radius: 10px;
+  padding: 0.8rem 0.95rem;
+  color: var(--secondary-color);
+  font-size: 1.05rem;
+  font-family: var(--body-font);
+}
+
+.rsvp-input::placeholder {
+  color: rgba(74, 74, 74, 0.82);
+}
+
+.rsvp-input:focus {
+  outline: none;
+  border-color: rgba(128, 0, 32, 0.28);
+  box-shadow: 0 0 0 3px rgba(128, 0, 32, 0.08);
+  background: rgba(253, 250, 246, 0.98);
+}
+
+.rsvp-textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.rsvp-submit-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.2rem;
+}
+
+.rsvp-submit-btn {
+  min-width: 165px;
+  justify-content: center;
+}
+
+.rsvp-help-text {
+  margin: 0.75rem 0 0;
+  text-align: center;
+  font-size: 0.78rem;
+  color: rgba(74, 74, 74, 0.72);
+}
+
+.rsvp-form-status {
+  min-height: 1.4rem;
+  margin-top: 0.45rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+}
+
+.rsvp-form-status.is-success {
+  color: #2f6b38;
+}
+
+.rsvp-form-status.is-error {
+  color: #8a2437;
+}
+
+@media (max-width: 767.98px) {
+  .rsvp-letter-card {
+    border-radius: 10px;
+    padding: 1.5rem 1rem 1.3rem;
+  }
+
+  .rsvp-reserved-label {
+    font-size: 1rem;
+  }
+
+  .rsvp-reserved-name {
+    font-size: 1.95rem;
+  }
+
+  .rsvp-reserved-count {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .rsvp-form-title {
+    font-size: 2.2rem;
+  }
+
+  .rsvp-input {
+    font-size: 1rem;
+    padding: 0.72rem 0.9rem;
+  }
+
+  .rsvp-submit-wrap {
+    justify-content: center;
+  }
+
+  .rsvp-submit-btn {
+    width: 100%;
+  }
 }
 
 /* --- Gift Registry Section --- */
+.registry-grid {
+  margin-top: 0.4rem;
+}
+
+.registry-item {
+  text-align: center;
+}
+
+.registry-image-link {
+  display: inline-block;
+}
+
 .gift-logo {
-  max-width: 150px;
+  width: min(100%, 240px);
+  max-width: 240px;
   filter: grayscale(100%);
-  transition: filter 0.3s ease;
+  transition: filter 0.3s ease, transform 0.3s ease;
   opacity: 0.7;
 }
 
 .gift-logo:hover {
   filter: grayscale(0%);
   opacity: 1;
+  transform: translateY(-3px);
+}
+
+.registry-title {
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+  color: var(--primary-color);
+  font-size: 1.35rem;
+  font-style: italic;
+}
+
+.registry-subtitle {
+  max-width: 300px;
+  margin: 0 auto;
+  font-size: 0.92rem;
+  color: var(--secondary-color);
+  line-height: 1.55;
+}
+
+.registry-btn {
+  margin-top: 0.9rem;
+  padding: 0.75rem 1.9rem;
+}
+
+@media (max-width: 767.98px) {
+  .gift-logo {
+    width: min(100%, 200px);
+    max-width: 200px;
+  }
+
+  .registry-title {
+    margin-top: 0.85rem;
+  }
+
+  .registry-item {
+    padding: 0 0.35rem;
+  }
 }
 
 /* --- Blog Section --- */

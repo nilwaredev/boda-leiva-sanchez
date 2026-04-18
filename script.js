@@ -331,6 +331,222 @@ $(document).ready(function () {
       document.addEventListener('touchstart', unlockAutoplay, { once: true });
       document.addEventListener('keydown', unlockAutoplay, { once: true });
   }
+
+  // 9. RSVP dynamic personalization and submission
+  const rsvpForm = document.getElementById('rsvpForm');
+  const reservedNameEl = document.getElementById('rsvpReservedName');
+    const reservedLabelEl = document.getElementById('rsvpReservedLabel');
+  const reservedCountEl = document.getElementById('rsvpReservedCount');
+    const rsvpFormTitleEl = document.getElementById('rsvpFormTitle');
+    const guestNamesLabelEl = document.getElementById('rsvpGuestNamesLabel');
+    const guestNamesInputEl = document.getElementById('rsvpGuestNames');
+  const hiddenReservedFor = document.getElementById('rsvpHiddenReservedFor');
+  const hiddenReservedCount = document.getElementById('rsvpHiddenReservedCount');
+  const rsvpStatusEl = document.getElementById('rsvpFormStatus');
+    const confirmationSelect = document.getElementById('rsvpConfirmation');
+
+  function setRsvpStatus(message, variant) {
+      if (!rsvpStatusEl) return;
+      rsvpStatusEl.textContent = message;
+      rsvpStatusEl.classList.remove('is-success', 'is-error');
+      if (variant) {
+          rsvpStatusEl.classList.add(variant);
+      }
+  }
+
+  function parseSeatCount(rawValue) {
+      if (!rawValue) return null;
+      const match = String(rawValue).match(/\d+/);
+      if (!match) return null;
+      const parsed = Number(match[0]);
+      return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+  }
+
+  function buildConfirmationOptions(seatCount) {
+      if (!confirmationSelect) return;
+
+      const safeSeats = Number.isFinite(seatCount) && seatCount > 0 ? seatCount : 2;
+      confirmationSelect.innerHTML = '';
+
+      const placeholderOption = document.createElement('option');
+      placeholderOption.value = '';
+      placeholderOption.textContent = 'Confirmacion';
+      placeholderOption.disabled = true;
+      placeholderOption.selected = true;
+      confirmationSelect.appendChild(placeholderOption);
+
+      for (let seats = safeSeats; seats >= 1; seats -= 1) {
+          const option = document.createElement('option');
+          if (safeSeats === 1) {
+              option.value = 'Asistiré';
+          } else {
+              option.value = seats === 1 ? 'Asistirá 1' : `Asistiremos los ${seats}`;
+          }
+          option.textContent = option.value;
+          confirmationSelect.appendChild(option);
+      }
+
+      const declineOption = document.createElement('option');
+      const declineText = safeSeats === 1 ? 'No podré asistir' : 'No podremos asistir';
+      declineOption.value = declineText;
+      declineOption.textContent = declineText;
+      confirmationSelect.appendChild(declineOption);
+  }
+
+  function applySeatAwareTexts(seatCount) {
+      const singular = seatCount === 1;
+
+      if (reservedLabelEl) {
+          reservedLabelEl.textContent = singular ? 'Invitación reservada para' : 'Invitaciones reservadas para';
+      }
+
+      if (reservedCountEl) {
+          reservedCountEl.textContent = `(${seatCount} ${singular ? 'persona' : 'personas'})`;
+      }
+
+      if (rsvpFormTitleEl) {
+          rsvpFormTitleEl.textContent = singular ? 'Confirma tu Asistencia' : 'Confirmen su Asistencia';
+      }
+
+      if (guestNamesLabelEl) {
+          guestNamesLabelEl.textContent = singular ? 'Nombre del asistente' : 'Nombres de los asistentes';
+      }
+
+      if (guestNamesInputEl) {
+          guestNamesInputEl.placeholder = singular ? 'Nombre del asistente' : 'Nombres de los asistentes';
+      }
+
+      if (hiddenReservedCount) {
+          hiddenReservedCount.value = `${seatCount} ${singular ? 'persona' : 'personas'}`;
+      }
+  }
+
+  function applyReservedGuestData() {
+      const params = new URLSearchParams(window.location.search);
+      const reservedFor = params.get('invitados') || params.get('guest') || params.get('family');
+      const reservedSeats = params.get('cupos') || params.get('seats') || params.get('personas');
+      let resolvedSeats = null;
+
+      if (reservedFor && reservedNameEl) {
+          reservedNameEl.textContent = reservedFor;
+      }
+
+      if (reservedSeats && reservedCountEl) {
+          const numberValue = Number(reservedSeats);
+          resolvedSeats = Number.isFinite(numberValue) && numberValue > 0 ? numberValue : parseSeatCount(reservedSeats);
+          const seatLabel = Number.isFinite(numberValue) && numberValue > 0 ? `${numberValue} personas` : reservedSeats;
+          reservedCountEl.textContent = `(${seatLabel})`;
+      }
+
+      if (!resolvedSeats && hiddenReservedCount) {
+          resolvedSeats = parseSeatCount(hiddenReservedCount.value);
+      }
+
+      if (!resolvedSeats && reservedCountEl) {
+          resolvedSeats = parseSeatCount(reservedCountEl.textContent);
+      }
+
+      if (!resolvedSeats) {
+          resolvedSeats = 2;
+      }
+
+      applySeatAwareTexts(resolvedSeats);
+
+      if (hiddenReservedFor && reservedNameEl) {
+          hiddenReservedFor.value = reservedNameEl.textContent.trim();
+      }
+
+      buildConfirmationOptions(resolvedSeats);
+  }
+
+  async function submitRsvpToEndpoint(formData) {
+      const endpoint = (rsvpForm.dataset.endpoint || '').trim();
+      const endpointUnset = endpoint === '' || endpoint.includes('YOUR_FORM_ID');
+      if (endpointUnset) {
+          return { ok: false, reason: 'endpoint-unset' };
+      }
+
+      const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+              'Accept': 'application/json'
+          },
+          body: formData
+      });
+
+      if (!response.ok) {
+          return { ok: false, reason: 'request-failed' };
+      }
+
+      return { ok: true };
+  }
+
+  function sendRsvpByMailto(formData) {
+      const recipient = (rsvpForm.dataset.recipientEmail || '').trim();
+      if (!recipient) {
+          return false;
+      }
+
+      const subject = encodeURIComponent('Confirmacion de asistencia - Boda Nicole y Pedro');
+      const lines = [
+          `Invitacion reservada para: ${formData.get('Invitación reservada para') || ''}`,
+          `Cantidad reservada: ${formData.get('Cantidad reservada') || ''}`,
+          `Confirmacion: ${formData.get('Confirmación') || ''}`,
+          `Nombres de los asistentes: ${formData.get('Nombres de los asistentes') || ''}`,
+          `Telefono de contacto: ${formData.get('Teléfono de contacto') || ''}`,
+          `Mensaje para los novios: ${formData.get('Mensaje para los novios') || ''}`
+      ];
+      const body = encodeURIComponent(lines.join('\n'));
+      window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
+      return true;
+  }
+
+  applyReservedGuestData();
+
+  if (rsvpForm) {
+      rsvpForm.addEventListener('submit', async function (event) {
+          event.preventDefault();
+
+          if (!rsvpForm.checkValidity()) {
+              rsvpForm.reportValidity();
+              return;
+          }
+
+          setRsvpStatus('Enviando confirmacion...', '');
+          const submitButton = rsvpForm.querySelector('button[type="submit"]');
+          if (submitButton) {
+              submitButton.disabled = true;
+          }
+
+          const formData = new FormData(rsvpForm);
+
+          try {
+              const result = await submitRsvpToEndpoint(formData);
+              if (result.ok) {
+                  setRsvpStatus('Gracias. Tu confirmacion fue enviada con exito.', 'is-success');
+                  rsvpForm.reset();
+                  return;
+              }
+
+              if (result.reason === 'endpoint-unset' && sendRsvpByMailto(formData)) {
+                  setRsvpStatus('Abrimos tu aplicacion de correo para completar el envio.', 'is-success');
+                  return;
+              }
+
+              setRsvpStatus('No se pudo enviar en este momento. Intentalo de nuevo.', 'is-error');
+          } catch (error) {
+              if (sendRsvpByMailto(formData)) {
+                  setRsvpStatus('Abrimos tu aplicacion de correo para completar el envio.', 'is-success');
+              } else {
+                  setRsvpStatus('No se pudo enviar en este momento. Intentalo de nuevo.', 'is-error');
+              }
+          } finally {
+              if (submitButton) {
+                  submitButton.disabled = false;
+              }
+          }
+      });
+  }
 });
 
 window.addEventListener('load', function () {
