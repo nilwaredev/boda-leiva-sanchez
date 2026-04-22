@@ -380,7 +380,7 @@ $(document).ready(function () {
           if (safeSeats === 1) {
               option.value = 'Asistiré';
           } else {
-              option.value = seats === 1 ? 'Asistirá 1' : `Asistiremos los ${seats}`;
+              option.value = seats === 1 ? 'Asistirá 1' : `Asistiremos ${seats}`;
           }
           option.textContent = option.value;
           confirmationSelect.appendChild(option);
