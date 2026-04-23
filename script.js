@@ -1,52 +1,20 @@
-function toggleHamburger(element) {
-  const hamburger = element.querySelector('.hamburger-animated');
-  hamburger.classList.toggle('open');
-
-  const isHamburgerVisible = $('.navbar-toggler').is(':visible');
-  const isScrolledLessThan50 = $(document).scrollTop() < 50;
-
-  // Check if menu is now open (after toggle)
-  const isMenuOpen = hamburger.classList.contains('open');
-
-  if (isHamburgerVisible && isScrolledLessThan50 && isMenuOpen) {
-      $('.mainNav').addClass('hamburgerclicked');
-  } else {
-      $('.mainNav').removeClass('hamburgerclicked');
-  }
-}
-
 $(document).ready(function () {
 
   // 1. AOS Initialization
-  AOS.init({
-      duration: 1000,
-      once: true,
+  if (typeof AOS !== 'undefined') {
+      AOS.init({
+          duration: 1000,
+          once: true,
+      });
+  }
+
+  // 2. Open external links in a new tab.
+  $('a[href^="http://"], a[href^="https://"], a[href^="mailto:"], a[href^="tel:"]').attr({
+      target: '_blank',
+      rel: 'noopener noreferrer'
   });
 
-  // 2. Navbar Shrink on Scroll
-  $(window).scroll(function () {
-      if ($(document).scrollTop() > 50) {
-          $('.mainNav').addClass('scrolled');
-      } else {
-          $('.mainNav').removeClass('scrolled');
-      }
-  });
-
-  // 3. Smooth Scrolling for Nav Links
-  $('.nav-link').on('click', function (event) {
-      if (this.hash !== "") {
-          // Prevent default anchor click behavior
-          event.preventDefault();
-          var hash = this.hash;
-          $('html, body').animate({
-              scrollTop: $(hash).offset().top - 70 // Adjust for fixed navbar height
-          }, 800, function () {
-              // window.location.hash = hash; // This line can be distracting
-          });
-      }
-  });
-
-  // 4. Countdown Timer
+  // 3. Countdown Timer
   // Set the date we're counting down to
   var countDownDate = new Date("Aug 08, 2026 17:00:00").getTime();
 
@@ -74,27 +42,7 @@ $(document).ready(function () {
       }
   }, 1000);
 
-  // 5. Wedding Party Slider (Swiper JS)
-  $(function () {
-      $('.wedding-party-slider').each(function () {
-          new Swiper(this, {
-              loop: true,
-              slidesPerView: 1,
-              spaceBetween: 30,
-              pagination: {
-                  el: $(this).find('.swiper-pagination')[0],
-                  clickable: true
-              },
-              breakpoints: {
-                  640: { slidesPerView: 2, spaceBetween: 20 },
-                  768: { slidesPerView: 3, spaceBetween: 40 },
-                  1024: { slidesPerView: 4, spaceBetween: 50 }
-              }
-          });
-      });
-  });
-
-  // 6. Lightbox2 Initialization
+  // 4. Lightbox2 Initialization
   if (typeof lightbox !== "undefined") {
       lightbox.option({
           resizeDuration: 200,
@@ -103,8 +51,8 @@ $(document).ready(function () {
       });
   }
 
-  // 7. Decorative flowers reveal on scroll
-  const decoSections = document.querySelectorAll('#countdown, #couple, #gallery, #registry');
+    // 5. Decorative flowers reveal on scroll
+    const decoSections = document.querySelectorAll('#countdown, #event-details, #gallery, #registry');
   if (decoSections.length > 0) {
       if ('IntersectionObserver' in window) {
           const decoObserver = new IntersectionObserver(function (entries, observer) {
@@ -129,7 +77,7 @@ $(document).ready(function () {
       }
   }
 
-    // 8. Floating Music Player
+    // 6. Floating Music Player
   const player = document.getElementById('heroMusicPlayer');
   const panel = document.getElementById('musicPanel');
   const audio = document.getElementById('heroAudio');
@@ -332,7 +280,7 @@ $(document).ready(function () {
       document.addEventListener('keydown', unlockAutoplay, { once: true });
   }
 
-  // 9. RSVP dynamic personalization and submission
+    // 7. RSVP dynamic personalization and submission
   const rsvpForm = document.getElementById('rsvpForm');
   const reservedNameEl = document.getElementById('rsvpReservedName');
     const reservedLabelEl = document.getElementById('rsvpReservedLabel');
@@ -552,6 +500,11 @@ $(document).ready(function () {
 window.addEventListener('load', function () {
   const loader = document.getElementById('loader');
   const body = document.body;
+    if (!loader) {
+            body.classList.remove('loading');
+            return;
+    }
+
   setTimeout(() => {
       loader.classList.add('loader-hidden');
       body.classList.remove('loading');
