@@ -29,7 +29,7 @@ body {
 
 @media (min-width: 1100px) {
   body {
-    background-color: var(--secondary-color);
+    background-color: var(--background-color);
     background-image: linear-gradient(rgba(44, 44, 44, 0.18), rgba(44, 44, 44, 0.18)), url('./images/general-bg.jpg');
     background-repeat: no-repeat;
     background-position: center center, center center;
@@ -163,7 +163,9 @@ body.loading #registry::before {
 }
 
 body.loading {
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 h1,
