@@ -28,6 +28,15 @@ img {
   touch-action: pan-y;
 }
 
+html.ios-scroll-fix body :not(input):not(textarea):not(select) {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+html.ios-scroll-fix img {
+  -webkit-user-drag: none;
+}
+
 body {
   font-family: var(--body-font);
   color: var(--text-color);

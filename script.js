@@ -1,7 +1,21 @@
 $(document).ready(function () {
 
+  const isIOS = /iP(ad|hone|od)/.test(window.navigator.userAgent)
+      || (window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1);
+
+  if (isIOS) {
+      document.documentElement.classList.add('ios-scroll-fix');
+      document.querySelectorAll('[data-aos]').forEach(function (element) {
+          element.removeAttribute('data-aos');
+          element.removeAttribute('data-aos-delay');
+          element.removeAttribute('data-aos-duration');
+          element.removeAttribute('data-aos-easing');
+          element.removeAttribute('data-aos-anchor-placement');
+      });
+  }
+
   // 1. AOS Initialization
-  if (typeof AOS !== 'undefined') {
+  if (!isIOS && typeof AOS !== 'undefined') {
       AOS.init({
           duration: 1000,
           once: true,
@@ -47,7 +61,7 @@ $(document).ready(function () {
       lightbox.option({
           resizeDuration: 200,
           wrapAround: true,
-          disableScrolling: true
+          disableScrolling: !isIOS
       });
   }
 
