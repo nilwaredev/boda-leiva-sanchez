@@ -247,12 +247,21 @@
                         </div>
                     </div>
                 </li>
-                 <li class="timeline-inverted" data-aos="fade-left">
-                    <div class="timeline-image"><i class="fas fa-glass-cheers"></i></div>
+                <li class="timeline-inverted" data-aos="fade-left">
+                    <div class="timeline-image"><i class="fa fa-glass-cheers"></i></div>
                     <div class="timeline-panel">
                         <div class="timeline-heading">
                             <h4>Fiesta</h4>
                             <p class="subheading">08:30 PM</p>
+                        </div>
+                    </div>
+                </li>
+                <li data-aos="fade-right">
+                    <div class="timeline-image"><i class="fas fa-home"></i></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4>Fin de recepción</h4>
+                            <p class="subheading">11:30 PM</p>
                         </div>
                     </div>
                 </li>
@@ -275,17 +284,16 @@
                     <p>Ellos: Traje formal. Agradecemos evitar el uso de jeans.</p>
                 </div>
 
-                <button type="button" class="btn hero-btn dress-inspire-btn">Ver referencias</button>
-
-                <p class="dress-colors-subtitle">Inspírate utilizando estos colores:</p>
-                <div class="dress-palette" aria-label="Colores recomendados para el dress code">
+                <p class="dress-colors-subtitle mt-3">Inspírate utilizando estos colores:</p>
+                <!-- <div class="dress-palette" aria-label="Colores recomendados para el dress code">
                     <span class="dress-color-dot dot-green" aria-hidden="true"></span>
                     <span class="dress-color-dot dot-burgundy" aria-hidden="true"></span>
                     <span class="dress-color-dot dot-terracotta" aria-hidden="true"></span>
                     <span class="dress-color-dot dot-gold" aria-hidden="true"></span>
-                </div>
+                </div> -->
+                <button type="button" class="btn hero-btn dress-inspire-btn" data-bs-toggle="modal" data-bs-target="#dressReferencesModal">Ver referencias</button>
 
-                <p class="dress-restriction-note">Restricción de color: el blanco y tonos similares están reservados para la novia.</p>
+                <p class="dress-restriction-note mt-3">Restricción de color: el blanco y tonos similares están reservados para la novia.</p>
             </div>
         </div>
     </section>
@@ -324,8 +332,8 @@
                     </div>
 
                     <div class="rsvp-field-wrap">
-                        <label for="rsvpMessage" class="visually-hidden">Mensaje para los novios</label>
-                        <textarea id="rsvpMessage" name="Mensaje para los novios" class="rsvp-input rsvp-textarea" rows="4" placeholder="Mensaje para los novios"></textarea>
+                        <label for="rsvpMessage" class="visually-hidden">Mensaje bonito para los novios</label>
+                        <textarea id="rsvpMessage" name="Mensaje bonito para los novios" class="rsvp-input rsvp-textarea" rows="4" placeholder="Mensaje bonito para los novios"></textarea>
                     </div>
 
                     <input type="hidden" id="rsvpHiddenReservedFor" name="Invitación reservada para" value="Familia Invitada">
@@ -339,6 +347,30 @@
             </div>
         </div>
     </section>
+
+    <!-- ============================================ -->
+    <!--             RSVP FEEDBACK MODAL              -->
+    <!-- ============================================ -->
+    <div class="modal fade rsvp-feedback-modal" id="rsvpFeedbackModal" tabindex="-1" aria-labelledby="rsvpFeedbackModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rsvpFeedbackModalLabel">Confirmación de Asistencia</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="rsvp-feedback-envelope" aria-hidden="true">
+                        <div class="rsvp-envelope-paper"></div>
+                        <div class="rsvp-envelope-flap"></div>
+                    </div>
+                    <p class="rsvp-feedback-message" id="rsvpFeedbackMessage">Enviando confirmación...</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn hero-btn" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- ============================================ -->
     <!--            GIFT REGISTRY SECTION             -->
@@ -400,6 +432,53 @@
             </div>
         </div>
     </section>
+
+    <!-- ============================================ -->
+    <!--            DRESS REFERENCES MODAL            -->
+    <!-- ============================================ -->
+    <div class="modal fade dress-references-modal" id="dressReferencesModal" tabindex="-1" aria-labelledby="dressReferencesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <p class="dress-references-kicker">Dress Code</p>
+                        <h5 class="modal-title" id="dressReferencesModalLabel">Referencias de Vestimenta</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="dressReferencesCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4600">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#dressReferencesCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Referencia 1"></button>
+                            <button type="button" data-bs-target="#dressReferencesCarousel" data-bs-slide-to="1" aria-label="Referencia 2"></button>
+                            <button type="button" data-bs-target="#dressReferencesCarousel" data-bs-slide-to="2" aria-label="Referencia 3"></button>
+                            <button type="button" data-bs-target="#dressReferencesCarousel" data-bs-slide-to="3" aria-label="Referencia 4"></button>
+                        </div>
+                        <div class="carousel-inner dress-references-carousel">
+                            <div class="carousel-item active">
+                                <img src="images/dress-code/1.jpeg" class="d-block w-100" alt="Referencia de vestimenta 1" loading="lazy" decoding="async">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/dress-code/2.jpg" class="d-block w-100" alt="Referencia de vestimenta 2" loading="lazy" decoding="async">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/dress-code/3.jpg" class="d-block w-100" alt="Referencia de vestimenta 3" loading="lazy" decoding="async">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/dress-code/4.jpg" class="d-block w-100" alt="Referencia de vestimenta 4" loading="lazy" decoding="async">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#dressReferencesCarousel" data-bs-slide="prev" aria-label="Anterior">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#dressReferencesCarousel" data-bs-slide="next" aria-label="Siguiente">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- ============================================ -->
     <!--                   FOOTER                     -->

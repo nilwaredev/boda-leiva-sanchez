@@ -360,7 +360,57 @@ $(document).ready(function () {
   const hiddenReservedFor = document.getElementById('rsvpHiddenReservedFor');
   const hiddenReservedCount = document.getElementById('rsvpHiddenReservedCount');
   const rsvpStatusEl = document.getElementById('rsvpFormStatus');
-    const confirmationSelect = document.getElementById('rsvpConfirmation');
+  const confirmationSelect = document.getElementById('rsvpConfirmation');
+  const rsvpFeedbackModalEl = document.getElementById('rsvpFeedbackModal');
+  const rsvpFeedbackMessageEl = document.getElementById('rsvpFeedbackMessage');
+  const rsvpFeedbackEnvelopeEl = rsvpFeedbackModalEl ? rsvpFeedbackModalEl.querySelector('.rsvp-feedback-envelope') : null;
+  const rsvpFeedbackModal = (typeof bootstrap !== 'undefined' && rsvpFeedbackModalEl)
+      ? new bootstrap.Modal(rsvpFeedbackModalEl)
+      : null;
+  let rsvpFeedbackAutoCloseTimer = null;
+
+  function clearRsvpFeedbackTimer() {
+      if (rsvpFeedbackAutoCloseTimer) {
+          window.clearTimeout(rsvpFeedbackAutoCloseTimer);
+          rsvpFeedbackAutoCloseTimer = null;
+      }
+  }
+
+  function showRsvpFeedbackModal(message, variant, options) {
+      if (!rsvpFeedbackModal || !rsvpFeedbackMessageEl || !rsvpFeedbackEnvelopeEl) {
+          setRsvpStatus(message, variant);
+          return;
+      }
+
+      const safeOptions = options || {};
+      const autoCloseMs = Number.isFinite(safeOptions.autoCloseMs) ? safeOptions.autoCloseMs : 0;
+      const playSealAnimation = Boolean(safeOptions.playSealAnimation);
+
+      clearRsvpFeedbackTimer();
+      rsvpFeedbackMessageEl.textContent = message;
+      rsvpFeedbackMessageEl.classList.remove('is-success', 'is-error');
+      if (variant) {
+          rsvpFeedbackMessageEl.classList.add(variant);
+      }
+
+      rsvpFeedbackEnvelopeEl.classList.remove('is-sealing');
+      if (playSealAnimation) {
+          void rsvpFeedbackEnvelopeEl.offsetWidth;
+          rsvpFeedbackEnvelopeEl.classList.add('is-sealing');
+      }
+
+      rsvpFeedbackModal.show();
+
+      if (autoCloseMs > 0) {
+          rsvpFeedbackAutoCloseTimer = window.setTimeout(function () {
+              rsvpFeedbackModal.hide();
+          }, autoCloseMs);
+      }
+  }
+
+  if (rsvpFeedbackModalEl) {
+      rsvpFeedbackModalEl.addEventListener('hidden.bs.modal', clearRsvpFeedbackTimer);
+  }
 
   function setRsvpStatus(message, variant) {
       if (!rsvpStatusEl) return;
@@ -511,7 +561,7 @@ $(document).ready(function () {
           `Confirmacion: ${formData.get('Confirmación') || ''}`,
           `Nombres de los asistentes: ${formData.get('Nombres de los asistentes') || ''}`,
           `Telefono de contacto: ${formData.get('Teléfono de contacto') || ''}`,
-          `Mensaje para los novios: ${formData.get('Mensaje para los novios') || ''}`
+          `Mensaje bonito para los novios: ${formData.get('Mensaje bonito para los novios') || ''}`
       ];
       const body = encodeURIComponent(lines.join('\n'));
       window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
@@ -530,6 +580,9 @@ $(document).ready(function () {
           }
 
           setRsvpStatus('Enviando confirmacion...', '');
+          showRsvpFeedbackModal('Enviando confirmacion...', '', {
+              playSealAnimation: true
+          });
           const submitButton = rsvpForm.querySelector('button[type="submit"]');
           if (submitButton) {
               submitButton.disabled = true;
@@ -541,21 +594,36 @@ $(document).ready(function () {
               const result = await submitRsvpToEndpoint(formData);
               if (result.ok) {
                   setRsvpStatus('Gracias. Tu confirmacion fue enviada con exito.', 'is-success');
+                  showRsvpFeedbackModal('Gracias. Tu confirmacion fue enviada con exito.', 'is-success', {
+                      autoCloseMs: 3400
+                  });
                   rsvpForm.reset();
                   return;
               }
 
               if (result.reason === 'endpoint-unset' && sendRsvpByMailto(formData)) {
                   setRsvpStatus('Abrimos tu aplicacion de correo para completar el envio.', 'is-success');
+                  showRsvpFeedbackModal('Abrimos tu aplicacion de correo para completar el envio.', 'is-success', {
+                      autoCloseMs: 4000
+                  });
                   return;
               }
 
               setRsvpStatus('No se pudo enviar en este momento. Intentalo de nuevo.', 'is-error');
+              showRsvpFeedbackModal('No se pudo enviar en este momento. Intentalo de nuevo.', 'is-error', {
+                  autoCloseMs: 4200
+              });
           } catch (error) {
               if (sendRsvpByMailto(formData)) {
                   setRsvpStatus('Abrimos tu aplicacion de correo para completar el envio.', 'is-success');
+                  showRsvpFeedbackModal('Abrimos tu aplicacion de correo para completar el envio.', 'is-success', {
+                      autoCloseMs: 4000
+                  });
               } else {
                   setRsvpStatus('No se pudo enviar en este momento. Intentalo de nuevo.', 'is-error');
+                  showRsvpFeedbackModal('No se pudo enviar en este momento. Intentalo de nuevo.', 'is-error', {
+                      autoCloseMs: 4200
+                  });
               }
           } finally {
               if (submitButton) {
