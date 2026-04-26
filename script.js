@@ -267,6 +267,16 @@ $(document).ready(function () {
           }
       }, { passive: true });
 
+      document.addEventListener('touchmove', function () {
+          const activeElement = document.activeElement;
+          if (!activeElement) return;
+
+          const tagName = activeElement.tagName;
+          if (tagName !== 'INPUT' && tagName !== 'TEXTAREA' && tagName !== 'SELECT') {
+              activeElement.blur();
+          }
+      }, { passive: true });
+
       setTimeout(attemptAutoplay, 2600);
 
       const unlockAutoplay = function () {

@@ -19,6 +19,13 @@ body {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
+  touch-action: pan-y;
+}
+
+a,
+button,
+img {
+  touch-action: pan-y;
 }
 
 body {
@@ -117,7 +124,7 @@ body {
   }
 
   #event-details::before {
-    right: -157px;
+    right: -107px;
   }
 
   #event-details::after {
