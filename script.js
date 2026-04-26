@@ -184,12 +184,30 @@ $(document).ready(function () {
       progressFill.style.width = `${percent}%`;
   }
 
-  function attemptAutoplay() {
-      if (!audio) return;
-      audio.play().then(() => {
+  function attemptAutoplay(allowMutedFallback = true) {
+      if (!audio) return Promise.resolve(false);
+
+      return audio.play().then(() => {
           setPlayerVisualState(true);
+          return true;
       }).catch(() => {
-          setPlayerVisualState(false);
+          if (!allowMutedFallback) {
+              setPlayerVisualState(false);
+              return false;
+          }
+
+          const previousMutedState = audio.muted;
+          audio.muted = true;
+
+          return audio.play().then(() => {
+              setPlayerVisualState(true);
+              audio.muted = previousMutedState;
+              return true;
+          }).catch(() => {
+              audio.muted = previousMutedState;
+              setPlayerVisualState(false);
+              return false;
+          });
       });
   }
 
@@ -292,6 +310,21 @@ $(document).ready(function () {
           }
       }, { passive: true });
 
+      document.addEventListener('visibilitychange', function () {
+          if (document.visibilityState === 'hidden') {
+              audio.pause();
+          }
+      });
+
+      window.addEventListener('pagehide', function () {
+          audio.pause();
+      });
+
+      window.addEventListener('beforeunload', function () {
+          audio.pause();
+      });
+
+      attemptAutoplay();
       setTimeout(attemptAutoplay, 2600);
 
       const unlockAutoplay = function () {
@@ -525,14 +558,32 @@ $(document).ready(function () {
 window.addEventListener('load', function () {
   const loader = document.getElementById('loader');
   const body = document.body;
-    if (!loader) {
+    let loaderWasHidden = false;
+
+    function hideLoader() {
+            if (loaderWasHidden) return;
+            loaderWasHidden = true;
+
+            if (loader) {
+                    loader.classList.add('loader-hidden');
+            }
+
             body.classList.remove('loading');
+            window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+    }
+
+    if (!loader) {
+            hideLoader();
             return;
     }
 
-  setTimeout(() => {
-      loader.classList.add('loader-hidden');
-      body.classList.remove('loading');
+    loader.addEventListener('click', hideLoader);
+    loader.addEventListener('touchstart', hideLoader, { passive: true });
 
-  }, 2500);
+    setTimeout(hideLoader, 2500);
+
+    // Emergency fallback: in case a device stalls the loader animation.
+    setTimeout(hideLoader, 7000);
 });
