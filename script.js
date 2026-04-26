@@ -365,14 +365,26 @@ $(document).ready(function () {
   const rsvpFeedbackMessageEl = document.getElementById('rsvpFeedbackMessage');
   const rsvpFeedbackEnvelopeEl = rsvpFeedbackModalEl ? rsvpFeedbackModalEl.querySelector('.rsvp-feedback-envelope') : null;
   const rsvpFeedbackModal = (typeof bootstrap !== 'undefined' && rsvpFeedbackModalEl)
-      ? new bootstrap.Modal(rsvpFeedbackModalEl)
+      ? new bootstrap.Modal(rsvpFeedbackModalEl, {
+          backdrop: 'static',
+          keyboard: false,
+          focus: true
+      })
       : null;
   let rsvpFeedbackAutoCloseTimer = null;
+  let rsvpFeedbackLocked = false;
 
   function clearRsvpFeedbackTimer() {
       if (rsvpFeedbackAutoCloseTimer) {
           window.clearTimeout(rsvpFeedbackAutoCloseTimer);
           rsvpFeedbackAutoCloseTimer = null;
+      }
+  }
+
+  function setRsvpFeedbackLocked(isLocked) {
+      rsvpFeedbackLocked = isLocked;
+      if (rsvpFeedbackModalEl) {
+          rsvpFeedbackModalEl.classList.toggle('is-locked', isLocked);
       }
   }
 
@@ -385,8 +397,10 @@ $(document).ready(function () {
       const safeOptions = options || {};
       const autoCloseMs = Number.isFinite(safeOptions.autoCloseMs) ? safeOptions.autoCloseMs : 0;
       const playSealAnimation = Boolean(safeOptions.playSealAnimation);
+      const isLocked = Boolean(safeOptions.locked);
 
       clearRsvpFeedbackTimer();
+      setRsvpFeedbackLocked(isLocked);
       rsvpFeedbackMessageEl.textContent = message;
       rsvpFeedbackMessageEl.classList.remove('is-success', 'is-error');
       if (variant) {
@@ -403,13 +417,26 @@ $(document).ready(function () {
 
       if (autoCloseMs > 0) {
           rsvpFeedbackAutoCloseTimer = window.setTimeout(function () {
+              setRsvpFeedbackLocked(false);
               rsvpFeedbackModal.hide();
           }, autoCloseMs);
       }
   }
 
   if (rsvpFeedbackModalEl) {
+      rsvpFeedbackModalEl.addEventListener('hide.bs.modal', function (event) {
+          if (rsvpFeedbackLocked) {
+              event.preventDefault();
+          }
+      });
+
       rsvpFeedbackModalEl.addEventListener('hidden.bs.modal', clearRsvpFeedbackTimer);
+      rsvpFeedbackModalEl.addEventListener('hidden.bs.modal', function () {
+          setRsvpFeedbackLocked(false);
+          if (rsvpFeedbackEnvelopeEl) {
+              rsvpFeedbackEnvelopeEl.classList.remove('is-sealing');
+          }
+      });
   }
 
   function setRsvpStatus(message, variant) {
@@ -581,7 +608,8 @@ $(document).ready(function () {
 
           setRsvpStatus('Enviando confirmacion...', '');
           showRsvpFeedbackModal('Enviando confirmacion...', '', {
-              playSealAnimation: true
+              playSealAnimation: true,
+              locked: true
           });
           const submitButton = rsvpForm.querySelector('button[type="submit"]');
           if (submitButton) {
@@ -595,7 +623,8 @@ $(document).ready(function () {
               if (result.ok) {
                   setRsvpStatus('Gracias. Tu confirmacion fue enviada con exito.', 'is-success');
                   showRsvpFeedbackModal('Gracias. Tu confirmacion fue enviada con exito.', 'is-success', {
-                      autoCloseMs: 3400
+                      autoCloseMs: 3400,
+                      locked: false
                   });
                   rsvpForm.reset();
                   return;
@@ -604,25 +633,29 @@ $(document).ready(function () {
               if (result.reason === 'endpoint-unset' && sendRsvpByMailto(formData)) {
                   setRsvpStatus('Abrimos tu aplicacion de correo para completar el envio.', 'is-success');
                   showRsvpFeedbackModal('Abrimos tu aplicacion de correo para completar el envio.', 'is-success', {
-                      autoCloseMs: 4000
+                      autoCloseMs: 4000,
+                      locked: false
                   });
                   return;
               }
 
               setRsvpStatus('No se pudo enviar en este momento. Intentalo de nuevo.', 'is-error');
               showRsvpFeedbackModal('No se pudo enviar en este momento. Intentalo de nuevo.', 'is-error', {
-                  autoCloseMs: 4200
+                  autoCloseMs: 4200,
+                  locked: false
               });
           } catch (error) {
               if (sendRsvpByMailto(formData)) {
                   setRsvpStatus('Abrimos tu aplicacion de correo para completar el envio.', 'is-success');
                   showRsvpFeedbackModal('Abrimos tu aplicacion de correo para completar el envio.', 'is-success', {
-                      autoCloseMs: 4000
+                      autoCloseMs: 4000,
+                      locked: false
                   });
               } else {
                   setRsvpStatus('No se pudo enviar en este momento. Intentalo de nuevo.', 'is-error');
                   showRsvpFeedbackModal('No se pudo enviar en este momento. Intentalo de nuevo.', 'is-error', {
-                      autoCloseMs: 4200
+                      autoCloseMs: 4200,
+                      locked: false
                   });
               }
           } finally {

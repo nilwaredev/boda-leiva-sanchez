@@ -1492,6 +1492,11 @@ a:hover {
   padding-bottom: 1rem;
 }
 
+.rsvp-feedback-modal.is-locked .modal-footer,
+.rsvp-feedback-modal.is-locked .rsvp-feedback-close {
+  display: none !important;
+}
+
 .rsvp-feedback-envelope {
   width: min(220px, 64vw);
   height: 132px;
