@@ -327,6 +327,17 @@ $(document).ready(function () {
       attemptAutoplay();
       setTimeout(attemptAutoplay, 2600);
 
+      const triggerAutoplayContingency = function () {
+          if (audio.paused) {
+              attemptAutoplay(false);
+          }
+      };
+
+      window.addEventListener('loader:hidden', triggerAutoplayContingency, { once: true });
+      window.addEventListener('scroll', triggerAutoplayContingency, { passive: true, once: true });
+      window.addEventListener('wheel', triggerAutoplayContingency, { passive: true, once: true });
+      window.addEventListener('touchmove', triggerAutoplayContingency, { passive: true, once: true });
+
       const unlockAutoplay = function () {
           if (audio.paused) {
               attemptAutoplay();
@@ -572,6 +583,7 @@ window.addEventListener('load', function () {
             window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
             document.documentElement.scrollTop = 0;
             document.body.scrollTop = 0;
+                window.dispatchEvent(new Event('loader:hidden'));
     }
 
     if (!loader) {
