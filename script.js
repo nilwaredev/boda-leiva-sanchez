@@ -1,23 +1,24 @@
 $(document).ready(function () {
 
-  const isIOS = /iP(ad|hone|od)/.test(window.navigator.userAgent)
-      || (window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1);
+  const isTouchDevice = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
-  if (isIOS) {
-      document.documentElement.classList.add('ios-scroll-fix');
+  if (isTouchDevice) {
+      document.documentElement.classList.add('touch-scroll-fix');
       document.querySelectorAll('[data-aos]').forEach(function (element) {
-          element.removeAttribute('data-aos');
+          // Keep only scroll-reveal transitions on touch devices.
+          element.setAttribute('data-aos', 'fade-up');
           element.removeAttribute('data-aos-delay');
-          element.removeAttribute('data-aos-duration');
-          element.removeAttribute('data-aos-easing');
+          element.setAttribute('data-aos-duration', '650');
+          element.setAttribute('data-aos-easing', 'ease-out');
           element.removeAttribute('data-aos-anchor-placement');
       });
   }
 
   // 1. AOS Initialization
-  if (!isIOS && typeof AOS !== 'undefined') {
+  if (typeof AOS !== 'undefined') {
       AOS.init({
-          duration: 1000,
+          duration: isTouchDevice ? 650 : 1000,
+          offset: isTouchDevice ? 40 : 90,
           once: true,
       });
   }
@@ -61,7 +62,7 @@ $(document).ready(function () {
       lightbox.option({
           resizeDuration: 200,
           wrapAround: true,
-          disableScrolling: !isIOS
+          disableScrolling: !isTouchDevice
       });
   }
 

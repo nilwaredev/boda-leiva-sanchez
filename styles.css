@@ -28,12 +28,12 @@ img {
   touch-action: pan-y;
 }
 
-html.ios-scroll-fix body :not(input):not(textarea):not(select) {
+html.touch-scroll-fix body :not(input):not(textarea):not(select) {
   -webkit-user-select: none;
   user-select: none;
 }
 
-html.ios-scroll-fix img {
+html.touch-scroll-fix img {
   -webkit-user-drag: none;
 }
 
@@ -1594,3 +1594,67 @@ a:hover {
 
 
 /* --- Single responsive strategy: mobile-first base + desktop frame only --- */
+
+@media (hover: none), (pointer: coarse) {
+  .btn-primary:hover,
+  .btn-primary:active {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    transform: none;
+    box-shadow: 0 4px 15px rgba(200, 157, 156, 0.4);
+  }
+
+  .hero-btn:hover {
+    color: var(--primary-color);
+  }
+
+  .hero-btn:hover::before {
+    left: -100%;
+  }
+
+  .hero-btn-outline:hover {
+    background-color: transparent;
+    color: var(--dark-color);
+  }
+
+  .music-toggle:hover {
+    transform: none;
+    box-shadow: 0 6px 14px rgba(128, 0, 32, 0.3);
+  }
+
+  .event-detail-card:hover {
+    transform: none;
+  }
+
+  .gallery-item:hover img {
+    transform: none;
+  }
+
+  .gallery-item:hover .overlay {
+    opacity: 0;
+  }
+
+  .gallery-item:hover .overlay .overlay-content {
+    transform: translateY(20px);
+  }
+
+  .gift-logo:hover {
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transform: none;
+  }
+
+  .footer-main .footer-links a:hover {
+    color: rgba(255, 255, 255, 0.7);
+    padding-left: 0;
+  }
+
+  .footer-main .social-icons-footer a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: none;
+  }
+
+  .footer-bottom a:hover {
+    text-decoration: none;
+  }
+}
