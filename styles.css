@@ -117,7 +117,7 @@ body {
   }
 
   #event-details::before {
-    right: -10px;
+    right: -157px;
   }
 
   #event-details::after {
@@ -251,6 +251,7 @@ a:hover {
   height: 100%;
   z-index: 9999;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .loader-split-left,
